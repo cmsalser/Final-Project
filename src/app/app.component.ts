@@ -9,6 +9,7 @@ import { VisualizerComponent } from './children/visualizer/visualizer.component'
 })
 export class AppComponent implements OnInit {
   @ViewChild('regex') regexChild!: VisualizerComponent
+  @ViewChild('nfa') nfaChild!: VisualizerComponent
   title = 'Regular Expressions and Finite Automata';
   error: string | undefined = undefined;
   
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
 
   onClick(text: string) {
     try {
+      this.nfaChild.data = parser.parse('/' + text + '/');
       this.regexChild.data = parser.parse('/' + text + '/');
       this.error = undefined;
     } catch (e) {

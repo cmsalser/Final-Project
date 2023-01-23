@@ -1,6 +1,6 @@
 import { Circle } from "./circle";
 
-export interface Transtion {
+export interface Transition {
     from: Node,
     to: Node,
     symbol: string

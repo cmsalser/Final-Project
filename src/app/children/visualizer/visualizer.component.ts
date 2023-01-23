@@ -1,7 +1,10 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { Canvas } from 'src/models/canvas';
-import { RegexFactory } from 'src/models/factories/regex-factory';
+import { Factory } from 'src/models/factories/factory';
 import { AstNode } from "regexp-tree/ast";
+import { RegexFactory } from 'src/models/factories/regex-factory';
+import { NFAFactory } from 'src/models/factories/nfa-factory';
+import { DFAFactory } from 'src/models/factories/dfa-factory';
 
 @Component({
   selector: 'app-visualizer',
@@ -19,12 +22,24 @@ export class VisualizerComponent implements AfterViewInit {
     }
   }
   private canvas: Canvas | undefined; 
-  private factory: RegexFactory | undefined;
+  private factory: Factory | undefined;
 
   constructor() { }
 
   ngAfterViewInit(): void {
     this.canvas = new Canvas('#' + this.name);
-    this.factory = new RegexFactory(this.canvas);   
+    switch(this.name) {
+      case 'regex':
+        this.factory = new RegexFactory(this.canvas);
+        break;
+      case 'nfa':
+        this.factory = new NFAFactory(this.canvas);
+        break;
+      case 'dfa':
+        this.factory = new DFAFactory(this.canvas); 
+        break;
+      default:
+        throw new Error('Unknown name in visualizer.component')
+    }   
   }
 }

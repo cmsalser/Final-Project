@@ -15,13 +15,13 @@
         </div>
         <div class="col-3"></div>
     </div>
-    <div class="col d-flex justify-content-center">
+    <div class="col d-flex justify-content-around">
         <app-visualizer #regex [name]="'regex'"></app-visualizer>
     </div>
-    <div class="col d-flex justify-content-center">
-        <app-visualizer [name]="'nfa'"></app-visualizer>
+    <div class="col d-flex justify-content-around">
+        <app-visualizer #nfa [name]="'nfa'"></app-visualizer>
     </div>
-    <div class="col d-flex justify-content-center">
+    <div class="col d-flex justify-content-around">
         <app-visualizer [name]="'dfa'"></app-visualizer>
     </div>    
 </div>

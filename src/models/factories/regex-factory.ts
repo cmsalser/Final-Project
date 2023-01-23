@@ -1,7 +1,7 @@
 import { Canvas } from "../canvas";
 import * as regexp from 'regexp-tree';
 import { AstNode } from "regexp-tree/ast";
-import { Node, Transtion } from "../node";
+import { Node, Transition } from "../node";
 import { Circle } from "../circle";
 import { Point } from "../point";
 import { Line } from "../line";
@@ -18,7 +18,7 @@ export class RegexFactory extends Factory{
     }
 
     override build(data: AstNode) {
-        let poolTransitions: Transtion[] = [];
+        let poolTransitions: Transition[] = [];
         const m: Map<AstNode, Node> = new Map();
         regexp.traverse(data, {
             RegExp: {
@@ -128,7 +128,6 @@ export class RegexFactory extends Factory{
 
     override draw() {
         this.canvas.empty();
-        this.canvas.clear();
         const levels = this.createLevels();
         for (let i = 0; i < levels.length; i++){
             const array = levels[i];
@@ -175,7 +174,7 @@ export class RegexFactory extends Factory{
         let toReturn: Array<Array<Node>> = [];
         toReturn.push(this.nodes.filter(n => n.name == 'root'));
         for (let i = 0; i < toReturn.length; i++){
-            let collecter: Array<Transtion> = [];
+            let collecter: Array<Transition> = [];
             let array = toReturn[i];
             array.forEach(n => {
                 this.transitions.filter(t => t.from === n).forEach(t => collecter.push(t));

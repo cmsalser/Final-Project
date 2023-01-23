@@ -1,10 +1,10 @@
 import { AstNode } from "regexp-tree/ast";
 import { Canvas } from "../canvas";
-import { Node, Transtion } from "../node";
+import { Node, Transition } from "../node";
 
 export class Factory {
     nodes: Node[];
-    transitions: Transtion[];
+    transitions: Transition[];
     canvas: Canvas;
     constructor(canvas: Canvas){
         this.canvas = canvas;
@@ -18,5 +18,9 @@ export class Factory {
 
     draw() {
         throw new Error('An undefined call to draw was made.');
+    }
+
+    next(input: string) {
+        throw new Error(`An undefined call to next was made with ${input}.`);
     }
 }

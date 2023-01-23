@@ -1,4 +1,5 @@
 import { CanvasElement } from "./canvas-element";
+import { Point } from "./point";
 import { Render } from "./render";
 
 export class Canvas {
@@ -6,9 +7,13 @@ export class Canvas {
     private canvas: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
     private render: Render;
-    private _dragInProgress: boolean = false;
-    private _dragX: number = 0;
-    private _dragY: number = 0;
+    private grabPoint?: Point = undefined;
+    private state = {
+        scale: 1,
+        zoom: 0,
+        xTranslation: 0,
+        yTranslation: 0
+    };
 
     constructor(id: string) {
         let canvas: any = document.querySelector(id);
@@ -27,50 +32,64 @@ export class Canvas {
         this.children.push(child);
     }
 
-    draw() { 
+    draw() {
+        this.context.clearRect(-this.state.xTranslation, -this.state.yTranslation, this.canvas.width * (1/this.state.scale), this.canvas.height * (1/this.state.scale)); 
         this.children.forEach(e => e.draw(this.render));
-    }
-
-    clear() {
-        //Save current context
-        this.context.save();
-        //Reset any transformations before clearing
-        this.context.setTransform(1, 0, 0, 1, 0, 0);
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        //Restore
-        this.context.restore();
     }
 
     empty() {
         this.children = [];
+        this.draw();
     }
 
     private setupListeners() {
-        this.canvas.addEventListener('mouseup', this.mouseUp.bind(this));
         this.canvas.addEventListener('mousedown', this.mouseDown.bind(this));
         this.canvas.addEventListener('mousemove', this.mouseMove.bind(this));
-        this.canvas.addEventListener('mouseout', this.mouseUp.bind(this));     
+        this.canvas.addEventListener('mouseup', this.mouseUp.bind(this));
+        this.canvas.addEventListener('wheel', this.mouseWheel.bind(this));
     }
 
     private mouseDown(e: MouseEvent) {
-        this._dragInProgress = true;
+        this.grabPoint = this.transformPoint(new Point(e.offsetX, e.offsetY));
         document.body.style.cursor = 'grabbing';
-        this._dragX = e.offsetX;
-        this._dragY = e.offsetY;
     };
 
     private mouseUp(e: MouseEvent) {
-        this._dragInProgress = false;
-        document.body.style.cursor = '';
-    };
+        if (this.grabPoint) {
+            document.body.style.cursor = '';
+            this.draw();
+            this.grabPoint = undefined;
+        }
+    }
 
     private mouseMove(e: MouseEvent) {
-        if (!this._dragInProgress) return;
-        this.clear();
-        this.context.translate(e.offsetX - this._dragX, e.offsetY - this._dragY);
-        this._dragX = e.offsetX;
-        this._dragY = e.offsetY;
-        this.draw();
-    };
+        const mousePoint = this.transformPoint(new Point(e.offsetX, e.offsetY));
+        if (this.grabPoint) {
+            this.state.xTranslation += mousePoint.x - this.grabPoint.x;
+            this.context.translate(mousePoint.x - this.grabPoint.x, 0);
 
+            this.state.yTranslation += mousePoint.y - this.grabPoint.y;
+            this.context.translate(0, mousePoint.y - this.grabPoint.y);
+        }
+        this.draw();
+    }
+
+    private mouseWheel(e: WheelEvent){
+        e.preventDefault();
+        this.state.zoom = this.state.zoom + (0.0005 * -e.deltaY);
+        //reset transformations
+        this.context.translate(-this.state.xTranslation, -this.state.yTranslation);
+        //reset scale
+        this.context.scale(1/this.state.scale, 1/this.state.scale);
+
+        this.state.scale = this.state.zoom + 1;
+        this.context.scale(this.state.scale, this.state.scale);
+        this.context.translate(this.state.xTranslation, this.state.yTranslation);
+
+        this.draw();
+    }
+
+    private transformPoint(p: Point): Point {
+        return new Point(p.x / this.state.scale - this.state.xTranslation, p.y / this.state.scale - this.state.yTranslation);
+    }
 }

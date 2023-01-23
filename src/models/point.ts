@@ -7,12 +7,12 @@ export class Point {
         this.y = y;
     }
 
-    distanceTo(location: Point) {
-        return Math.hypot(location.x - this.x, location.y - this.y); 
+    distanceTo(p: Point) {
+        return Math.hypot(p.x - this.x, p.y - this.y); 
     }
 
-    angleTo(location: Point) {
-        return Math.atan2(location.y - this.y, location.x - this.x);
+    angleTo(p: Point) {
+        return Math.atan2(p.y - this.y, p.x - this.x);
     }
 
     pointAt(angle: number, radius: number): Point {
