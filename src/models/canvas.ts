@@ -39,7 +39,6 @@ export class Canvas {
 
     empty() {
         this.children = [];
-        this.draw();
     }
 
     private setupListeners() {
