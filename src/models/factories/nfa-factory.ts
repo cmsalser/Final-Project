@@ -2,13 +2,16 @@ import { Canvas } from "../canvas";
 import { Factory } from "./factory";
 import * as regexp from 'regexp-tree';
 import { AstNode } from "regexp-tree/ast";
-import { Node } from "../node";
+import { Node, Transition } from "../node";
 import { Circle } from "../circle";
 import { Point } from "../point";
 import { BezierCurve } from "../bezier-curve";
 
 const {fa} = require('regexp-tree')
 const NODE_RADIUS = 30;
+const CANVAS_HEIGHT = 500;
+const CANVAS_WIDTH = 500;
+const START_X = 45;
 export class NFAFactory extends Factory{
     private nfa: any;
     private table: any;
@@ -55,14 +58,36 @@ export class NFAFactory extends Factory{
 
     override draw() {
         this.canvas.empty();
-        let c = new Circle(new Point(30, 30), NODE_RADIUS);
-        const a = c.bezierPoints(.5);  
-        let l = new BezierCurve(a[0], a[1], a[2], a[3], true, 'A');
-        this.canvas.addChildren(c);
-        this.canvas.addChildren(l);
-        this.canvas.draw();
-        console.log(this.nfa);
         console.log(this.nodes);
-        console.log(this.transitions)
+        console.log(this.transitions);
+        let x = START_X;
+        this.createLevels().forEach(array => {
+            const start_y = (CANVAS_HEIGHT/2) - ((array.length - 1)/2 * 90);
+            array.forEach(n => {
+                const c = new Circle(new Point(x, start_y + (array.indexOf(n) * 90)), NODE_RADIUS, n.name);
+                n.addCircle(c);
+                this.canvas.addChildren(c);
+            });
+            x += 3 * NODE_RADIUS;
+        });
+        this.canvas.draw();
+    }
+
+    private createLevels(): Array<Array<Node>> {
+        let toReturn: Array<Array<Node>> = []
+        toReturn.push(this.nodes.filter(n => n.isStartState()));
+        let collecter: Array<Node> = [];
+        this.nodes.forEach(n => {
+            if (!n.isAcceptState() && !n.isStartState()){
+                collecter.push(n);
+
+                if (collecter.length == 2) {
+                    toReturn.push(collecter);
+                    collecter = [];
+                }
+            }
+        });
+        toReturn.push(this.nodes.filter(n => n.isAcceptState()));
+        return toReturn
     }
 }

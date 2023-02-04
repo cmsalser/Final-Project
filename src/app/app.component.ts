@@ -10,7 +10,7 @@ import { VisualizerComponent } from './children/visualizer/visualizer.component'
 export class AppComponent implements OnInit {
   @ViewChild('regex') regexChild!: VisualizerComponent
   @ViewChild('nfa') nfaChild!: VisualizerComponent
-  title = 'Regular Expressions and Finite Automata';
+  title = 'regular expressions and finite automata';
   error: string | undefined = undefined;
   
   ngOnInit(): void {

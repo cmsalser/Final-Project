@@ -131,7 +131,7 @@ export class RegexFactory extends Factory{
         const levels = this.createLevels();
         for (let i = 0; i < levels.length; i++){
             const array = levels[i];
-            const offset = CANVAS_WIDTH/(array.length + 1);
+            const start_x = (CANVAS_HEIGHT/2) - ((array.length - 1)/2 * 90);
             array.forEach(n => {
                 let x: number = 0;
                 let y: number = 0;
@@ -147,7 +147,7 @@ export class RegexFactory extends Factory{
                     }
                     //Otherwise, nodes will use the offset
                     else {     
-                        x = offset * (array.indexOf(n) + 1); 
+                        x = start_x + ((array.indexOf(n)) * 90); 
                     }
                 }
                 //Otherwise place root node in default pos
