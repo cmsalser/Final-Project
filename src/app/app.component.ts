@@ -8,8 +8,9 @@ import { VisualizerComponent } from './children/visualizer/visualizer.component'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  @ViewChild('regex') regexChild!: VisualizerComponent
-  @ViewChild('nfa') nfaChild!: VisualizerComponent
+  @ViewChild('regex') regexChild!: VisualizerComponent;
+  @ViewChild('nfa') nfaChild!: VisualizerComponent;
+  @ViewChild('dfa') dfaChild!: VisualizerComponent;
   title = 'regular expressions and finite automata';
   error: string | undefined = undefined;
   
@@ -21,14 +22,14 @@ export class AppComponent implements OnInit {
     try {
       this.nfaChild.data = parser.parse('/' + text + '/');
       this.regexChild.data = parser.parse('/' + text + '/');
+      this.dfaChild.data = parser.parse('/' + text + '/');
       this.error = undefined;
     } catch (e) {
+      console.log(e)
       if (e instanceof SyntaxError) {
         this.error = e.message;
       } else if (e instanceof Error) {
         this.error = e.message;
-      } else {
-        console.log(e);
       }
     }
   }

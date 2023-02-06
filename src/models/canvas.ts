@@ -75,7 +75,7 @@ export class Canvas {
 
     private mouseWheel(e: WheelEvent){
         e.preventDefault();
-        this.state.zoom = this.state.zoom + (0.0005 * -e.deltaY);
+        this.state.zoom = this.state.zoom + (0.0008 * -e.deltaY);
         //reset transformations
         this.context.translate(-this.state.xTranslation, -this.state.yTranslation);
         //reset scale

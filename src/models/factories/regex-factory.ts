@@ -23,7 +23,7 @@ export class RegexFactory extends Factory{
         regexp.traverse(data, {
             RegExp: {
                 pre({node}) {
-                    let x = new Node('root', 'n/a');
+                    let x = new Node('root');
                     m.set(node, x);
                 },
                 post({node}){
@@ -38,7 +38,7 @@ export class RegexFactory extends Factory{
             },
             Disjunction: {
                 pre({node}) {
-                    let x = new Node(node.type, 'n/a');
+                    let x = new Node(node.type);
                     m.set(node, x);
                 },
                 post({node}) {
@@ -60,7 +60,7 @@ export class RegexFactory extends Factory{
             },
             Alternative: {
                 pre({node}) {
-                    let x = new Node('concatination', 'n/a');
+                    let x = new Node('concatination');
                     m.set(node, x);
                 },
                 post({node}){
@@ -74,7 +74,7 @@ export class RegexFactory extends Factory{
                 }
             },
             Char({node}) {
-                let x = new Node(node.value, 'n/a');
+                let x = new Node(node.value);
                 m.set(node, x);
             },
             Repetition: {
@@ -86,7 +86,7 @@ export class RegexFactory extends Factory{
                         case ('+'): name = 'oneOrMore'; break;
                         default: throw new Error('Repition Quantifier not found'); 
                     }
-                    let x = new Node(name, 'n/a');
+                    let x = new Node(name);
                     m.set(node, x);
                 },
                 post({node}){
@@ -99,7 +99,7 @@ export class RegexFactory extends Factory{
             },
             Group: {
                 pre({node}){
-                    let x = new Node(node.type, 'n/a');
+                    let x = new Node(node.type);
                     m.set(node, x);
                 },
                 post({node}){
