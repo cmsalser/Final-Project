@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   @ViewChild('dfa') dfaChild!: VisualizerComponent;
   title = 'regular expressions and finite automata';
   error: string | undefined = undefined;
-  
+  help: string = "a|b \n a?" 
   ngOnInit(): void {
 
   }

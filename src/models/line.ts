@@ -34,7 +34,6 @@ export class Line extends CanvasElement {
             const halfway = this.from.pointAt(angle, distance/2);
             tool.ctx.font = "14px Arial";
             tool.ctx.fillText(this.symbol, halfway.x + 10, halfway.y - 5);
-            tool.ctx.font = "";
         }
         tool.ctx.stroke();
     }

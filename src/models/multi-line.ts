@@ -35,7 +35,6 @@ export class MultiLine extends CanvasElement {
         if (this.symbol && this.center) {
             tool.ctx.font = "14px Arial";
             tool.ctx.fillText(this.symbol, this.center.x, this.center.y);
-            tool.ctx.font = "";
         }
         tool.ctx.stroke();
     }

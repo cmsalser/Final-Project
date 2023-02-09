@@ -7,7 +7,7 @@ import { Point } from "../point";
 import { Line } from "../line";
 import { Factory } from "./factory";
 
-const NODE_RADIUS = 30;
+const NODE_RADIUS = 35;
 const CANVAS_HEIGHT = 500;
 const CANVAS_WIDTH = 500;
 const START_Y = 35;
@@ -60,7 +60,7 @@ export class RegexFactory extends Factory{
             },
             Alternative: {
                 pre({node}) {
-                    let x = new Node('concatination');
+                    let x = new Node('Concatination');
                     m.set(node, x);
                 },
                 post({node}){
@@ -81,9 +81,9 @@ export class RegexFactory extends Factory{
                 pre({node}) {
                     let name: string = '';
                     switch(node.quantifier.kind){
-                        case ('?'): name = 'zeroOrOne'; break;
-                        case ('*'): name = 'zeroOrMore'; break;
-                        case ('+'): name = 'oneOrMore'; break;
+                        case ('?'): name = 'ZeroOrOne'; break;
+                        case ('*'): name = 'ZeroOrMore'; break;
+                        case ('+'): name = 'OneOrMore'; break;
                         default: throw new Error('Repition Quantifier not found'); 
                     }
                     let x = new Node(name);

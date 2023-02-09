@@ -1,4 +1,4 @@
-.btn {
+.btn-enter {
     background-color: #222222;
     color: #f2f2f2;
     border-radius: 0%;
@@ -11,5 +11,17 @@
 .header {
     background-color: #222222;
     color: white;
-    padding-left: 1%;
+    display: flex;
+    align-items: center;
+}
+.header h1 {
+    margin-left: .5%;
+}
+.header button{
+    margin-left: auto;
+    margin-right: .5%;
+    background-color: white;
+    width: min-content;
+    height: min-content;
+    color: black;
 }

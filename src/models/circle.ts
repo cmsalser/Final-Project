@@ -22,7 +22,9 @@ export class Circle extends CanvasElement {
         tool.ctx.beginPath();
         tool.ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);
         if (this.text) {
-            tool.ctx.textAlign = 'center';  
+            tool.ctx.textAlign = 'center';
+            if (this.text.length < 9) tool.ctx.font = "14px Arial";
+            else tool.ctx.font = "10px Arial";  
             tool.ctx.fillText(this.text, this.center.x, this.center.y);
         }
         tool.ctx.stroke();
@@ -30,28 +32,5 @@ export class Circle extends CanvasElement {
 
     getCenter(): Point {
         return this.center;
-    }
-
-    /**
-     * 
-     * @param distance Distance along the cicle circumfrance as decimal
-     * 
-     * @returns 4 Points for a bezier curve
-     */
-    bezierPoints(distance: number): Array<Point> {
-        let toReturn = [
-            new Point(
-                this.center.x + this.radius * Math.cos(2 * Math.PI * (distance - .1)),
-                this.center.y + this.radius * Math.sin(2 * Math.PI * (distance - .1))
-            ),
-            new Point(
-                this.center.x + this.radius * Math.cos(2 * Math.PI * (distance + .1)),
-                this.center.y + this.radius * Math.sin(2 * Math.PI * (distance + .1))
-            )
-        ];
-        const c1 = toReturn[0].pointAt(2 * Math.PI * (distance - .1), this.radius*2);
-        const c2 = toReturn[1].pointAt(2 * Math.PI * (distance + .1), this.radius*2);
-        toReturn.push(c1, c2);
-        return toReturn;
     }
 }
