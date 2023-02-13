@@ -28,4 +28,12 @@ export class Node {
     isStartState(): boolean {
         return this.isStart;
     }
+
+    toggle(): void {
+        this.canvasElement!.toggle();
+    }
+
+    isActive(): boolean {
+        return this.canvasElement!.isActive();
+    }
 }

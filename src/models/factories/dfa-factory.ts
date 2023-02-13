@@ -112,4 +112,31 @@ export class DFAFactory extends Factory{
         });
         this.canvas.draw();
     }
+
+    override next(input: string): boolean {
+        if (input == 'start') {
+            this.nodes.find(n => n.isStartState())!.toggle();
+            this.canvas.draw();
+            return true;
+        } else {
+            let current = this.nodes.find(n => n.isActive());
+            let outgoing = this.transitions.find(t => (t.from == current) && t.symbol == input);
+            current!.toggle();
+            if (!outgoing) {
+                return false;
+            }
+            outgoing.to.toggle();
+            this.canvas.draw();
+            return true;
+        }
+    }
+
+    override isValid(): boolean {
+        const node = this.nodes.find(n => n.isActive());
+        this.nodes.forEach(n => {
+            if (n.isActive()) n.toggle();
+        });
+        if (node && node.isAcceptState()) return true;
+        return false;
+    }
 }

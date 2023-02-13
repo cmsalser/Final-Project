@@ -1,31 +1,47 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
+import { VisualizerComponent } from './children/visualizer/visualizer.component';
+
+class VisualizerComponentMock {
+  public data = '';
+}
 
 describe('AppComponent', () => {
+  let app: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AppComponent
-      ],
+        AppComponent,
+        VisualizerComponent,
+        NgbPopover
+      ]
     }).compileComponents();
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
   it(`should have as title 'regex'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('regex');
+    expect(app.title).toEqual('regular expressions and finite automata');
   });
 
   it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('regex app is running!');
+    expect(compiled.querySelector('.header h1')?.textContent).toContain('regular expressions and finite automata');
+  });
+
+  it('should not allow empty strings', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    
+    app.onClick('');
+    expect(app.error).toBeTruthy();
+    expect(app.error).toEqual('Please enter an expression first.')
   });
 });

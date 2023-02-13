@@ -20,7 +20,11 @@ export class Factory {
         throw new Error('An undefined call to draw was made.');
     }
 
-    next(input: string) {
+    next(input: string): boolean {
         throw new Error(`An undefined call to next was made with ${input}.`);
+    }
+
+    isValid(): boolean {
+        throw new Error('An undefined call to isValid was made');
     }
 }

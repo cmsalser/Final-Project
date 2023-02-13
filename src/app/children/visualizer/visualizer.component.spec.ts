@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { VisualizerComponent } from './visualizer.component';
 
 describe('VisualizerComponent', () => {
@@ -14,6 +13,7 @@ describe('VisualizerComponent', () => {
 
     fixture = TestBed.createComponent(VisualizerComponent);
     component = fixture.componentInstance;
+    component.name = 'nfa'
     fixture.detectChanges();
   });
 

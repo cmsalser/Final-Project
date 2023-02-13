@@ -42,4 +42,24 @@ export class VisualizerComponent implements AfterViewInit {
         throw new Error('Unknown name in visualizer.component')
     }   
   }
+
+  async validate(tokens: string[]) {
+    if (this.factory) {
+      for (let i = 0; i < tokens.length; i++){
+        const curr = tokens[i];
+        console.log(curr)
+        if (this.factory.next(curr)) {
+          await this.waitFor(1500);
+        } else {
+          break;
+        }
+      }
+
+      console.log(this.factory.isValid());
+    }
+  }
+
+  waitFor(n: number) {
+    return new Promise(resolve => setTimeout(resolve, n));
+  }
 }
