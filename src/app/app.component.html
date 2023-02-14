@@ -44,9 +44,9 @@
         <div class="col-4"></div>
         <div class="col">
             <div class="input-group pl-4 pt-4">
-                <input #input2 type="text" class="form-control" placeholder="test a word">
+                <input #input2 type="text" class="form-control" placeholder="test a word" [attr.disabled]="loading">
                 <div class="input-group-append">
-                    <button class="btn btn-enter" type="button" (click)="validate(input2.value)">Validate</button>
+                    <button class="btn btn-enter" type="button" (click)="validate(input2.value)" [attr.disabled]="loading">Validate</button>
                 </div>
             </div>
         </div>

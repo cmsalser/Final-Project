@@ -16,10 +16,6 @@ export class Circle extends CanvasElement {
         this.status = false;
     }
 
-    override touchesPoint(point: Point): boolean {
-        return this.center.distanceTo(point) < this.radius;
-    }
-
     override draw(tool: Render): void {
         tool.ctx.beginPath();
         tool.ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);

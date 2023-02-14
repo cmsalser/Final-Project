@@ -136,6 +136,7 @@ export class DFAFactory extends Factory{
         this.nodes.forEach(n => {
             if (n.isActive()) n.toggle();
         });
+        this.canvas.draw();
         if (node && node.isAcceptState()) return true;
         return false;
     }

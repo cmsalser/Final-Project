@@ -5,11 +5,40 @@ import { AstNode } from "regexp-tree/ast";
 import { RegexFactory } from 'src/models/factories/regex-factory';
 import { NFAFactory } from 'src/models/factories/nfa-factory';
 import { DFAFactory } from 'src/models/factories/dfa-factory';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-visualizer',
   templateUrl: './visualizer.component.html',
-  styleUrls: ['./visualizer.component.css']
+  styleUrls: ['./visualizer.component.css'],
+  animations: [
+    trigger('valid', [
+      state('true', style({
+        border: '3px solid #03aa27',
+        backgroundColor: '#9eec8a'
+      })),
+      state('false', style({
+        border: '3px solid #222222',
+        backgroundColor: 'white'
+      })),
+      transition('0 <=> 1', [
+        animate('1000ms ease')
+      ])
+    ]),
+    trigger('notValid', [
+      state('true', style({
+        border: '3px solid #f00a0a',
+        backgroundColor: '#ec7777'
+      })),
+      state('false', style({
+        border: '3px solid #222222',
+        backgroundColor: 'white'
+      })),
+      transition('0 <=> 1', [
+        animate('1000ms ease')
+      ]) 
+    ])
+  ]
 })
 export class VisualizerComponent implements AfterViewInit {
   @Input() name = '';
@@ -23,6 +52,8 @@ export class VisualizerComponent implements AfterViewInit {
   }
   private canvas: Canvas | undefined; 
   private factory: Factory | undefined;
+  validAnimate = false;
+  nonValidAnimate = false;
 
   constructor() { }
 
@@ -47,19 +78,29 @@ export class VisualizerComponent implements AfterViewInit {
     if (this.factory) {
       for (let i = 0; i < tokens.length; i++){
         const curr = tokens[i];
-        console.log(curr)
         if (this.factory.next(curr)) {
           await this.waitFor(1500);
         } else {
           break;
         }
       }
-
-      console.log(this.factory.isValid());
-    }
+      if (this.factory.isValid()){
+        this.validAnimate = true;
+      } else {
+        this.nonValidAnimate = true;
+      }
+    } 
   }
 
   waitFor(n: number) {
     return new Promise(resolve => setTimeout(resolve, n));
+  }
+
+  onValidAnimationFinish() {
+    this.validAnimate = false;
+  }
+
+  onNonValidAnimationFinish() {
+    this.nonValidAnimate = false;
   }
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { AppComponent } from './app.component';
 import { VisualizerComponent } from './children/visualizer/visualizer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,7 +12,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   imports: [
     BrowserModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
