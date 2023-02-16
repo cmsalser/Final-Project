@@ -11,11 +11,13 @@ import { Line } from "../line";
 const {fa} = require('regexp-tree');
 const dagre = require('dagre');
 
+const EPSILON = 'ε*';
 const NODE_RADIUS = 30;
 export class NFAFactory extends Factory{
     private nfa: any;
     private table: any;
     private graph: any;
+    private vistited = new Set();
 
     constructor(canvas: Canvas) {
         super(canvas);
@@ -70,8 +72,6 @@ export class NFAFactory extends Factory{
 
     override draw() {
         this.canvas.empty();
-        console.log('NFA');
-        console.log(this.nfa);
         
         dagre.layout(this.graph);
         this.graph.nodes().forEach((n: any) => {
@@ -114,5 +114,43 @@ export class NFAFactory extends Factory{
             this.canvas.addChildren(l);
         });
         this.canvas.draw();
+    }
+
+    override next(input: string): boolean {
+        if (input == 'start') {
+            this.nodes.find(n => n.isStartState())!.toggle();
+            this.canvas.draw();
+            return true;
+        } else {
+            //Find active state
+            let current = this.nodes.find(n => n.isActive());
+            current!.toggle();
+            let nextStates: Node[] = [current!];
+            //Add all states reachable by Epsilon transition that are not self loops
+            this.transitions.filter(t => t.from == current).forEach(t => {
+                if (t.symbol == EPSILON && t.to != current) nextStates.push(t.to);
+            });
+
+            let activeTransitions = this.transitions.filter(t => t.symbol == input && nextStates.includes(t.from)); 
+            activeTransitions.forEach(t => t.to.toggle());
+            this.canvas.draw();
+            return activeTransitions.length > 0;
+        }
+    }
+
+    override isValid(): boolean {
+        let active = this.nodes.find(n => n.isActive());
+        if (!active) {
+            return false;
+        }
+        active.toggle();
+        this.canvas.draw();
+        //Find all states reachable with epsilon to see if we are near an accepting state
+        let nextStates: Node[] = [];
+        this.transitions.filter(t => t.from == active).forEach(t => {
+            if (t.symbol == EPSILON && t.to != active) nextStates.push(t.to);
+        });
+        nextStates.push(active!);
+        return nextStates.filter(n => n.isAcceptState()).length > 0;
     }
 }

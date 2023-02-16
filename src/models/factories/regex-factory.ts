@@ -170,6 +170,32 @@ export class RegexFactory extends Factory{
         this.canvas.draw();
     }
 
+    override next(input: string): boolean {
+        if (input == 'start') {
+            this.nodes.find(n => n.name == 'root')!.toggle();
+            this.canvas.draw();
+            return true;
+        } else {
+            let current = this.nodes.filter(n => n.isActive());
+            current.forEach(n => n.toggle());
+            let active = this.nodes.filter(n => n.name == input);
+            if (active.length > 0) {
+                active.forEach(n => n.toggle());
+                this.canvas.draw();
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    override isValid(): boolean {
+        let active = this.nodes.filter(n => n.isActive());
+        active.forEach(n => n.toggle());
+        this.canvas.draw();
+        return true;
+    }
+
     private createLevels(): Array<Array<Node>> {
         let toReturn: Array<Array<Node>> = [];
         toReturn.push(this.nodes.filter(n => n.name == 'root'));

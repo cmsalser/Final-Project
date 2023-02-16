@@ -9,7 +9,7 @@ export class Node {
     name: string;
     canvasElement: Circle | undefined;
     private isAccepting: boolean;
-    private isStart: boolean;
+    private isStart: boolean = false;
 
     constructor(name: string, accepting: boolean = false, start: boolean = false) {
         this.name = name;
@@ -27,6 +27,10 @@ export class Node {
 
     isStartState(): boolean {
         return this.isStart;
+    }
+
+    setStart(value: boolean){
+        this.isStart = value;
     }
 
     toggle(): void {

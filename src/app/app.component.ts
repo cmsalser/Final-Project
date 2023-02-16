@@ -38,7 +38,11 @@ export class AppComponent {
   async validate(text: string) {
     const tokens = ['start'].concat([...text]);
     this.loading = true;
-    await this.dfaChild.validate(tokens);
+    await Promise.all([
+      this.regexChild.validate(tokens),
+      this.dfaChild.validate(tokens),
+      this.nfaChild.validate(tokens)
+    ]);
     this.loading = null;
   }
 }
