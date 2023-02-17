@@ -6,6 +6,7 @@ import { RegexFactory } from 'src/models/factories/regex-factory';
 import { NFAFactory } from 'src/models/factories/nfa-factory';
 import { DFAFactory } from 'src/models/factories/dfa-factory';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import TypeIt from 'typeit';
 
 @Component({
   selector: 'app-visualizer',
@@ -59,6 +60,11 @@ export class VisualizerComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.canvas = new Canvas('#' + this.name);
+    new (TypeIt as any)('#' + this.name + '-title', {
+      cursor: false,
+      startDelay: 4000,
+      strings: this.name
+    }).go();
     switch(this.name) {
       case 'regex':
         this.factory = new RegexFactory(this.canvas);
@@ -74,7 +80,7 @@ export class VisualizerComponent implements AfterViewInit {
     }   
   }
 
-  async validate(tokens: string[]) {
+  async validate(tokens: string[]): Promise<boolean> {
     if (this.factory) {
       for (let i = 0; i < tokens.length; i++){
         const curr = tokens[i];
@@ -84,16 +90,20 @@ export class VisualizerComponent implements AfterViewInit {
           break;
         }
       }
-      if (this.factory.isValid()){
-        this.validAnimate = true;
-      } else {
-        this.nonValidAnimate = true;
-      }
+
+      return this.factory.isValid();
+    } else {
+      return Promise.resolve(false);
     } 
   }
 
   waitFor(n: number) {
     return new Promise(resolve => setTimeout(resolve, n));
+  }
+
+  startAnimation(result: boolean) {
+    if (result) this.validAnimate = true;
+    else this.nonValidAnimate = true;
   }
 
   onValidAnimationFinish() {

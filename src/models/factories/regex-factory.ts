@@ -12,7 +12,9 @@ const CANVAS_HEIGHT = 500;
 const CANVAS_WIDTH = 500;
 const START_Y = 35;
 
-export class RegexFactory extends Factory{ 
+export class RegexFactory extends Factory{
+    private visited = new Set();
+
     constructor(canvas: Canvas) {
         super(canvas);
     }
@@ -172,15 +174,21 @@ export class RegexFactory extends Factory{
 
     override next(input: string): boolean {
         if (input == 'start') {
-            this.nodes.find(n => n.name == 'root')!.toggle();
+            const n = this.nodes.find(n => n.name == 'root');
+            n!.toggle();
+            this.visited.add(n);
             this.canvas.draw();
             return true;
         } else {
-            let current = this.nodes.filter(n => n.isActive());
-            current.forEach(n => n.toggle());
-            let active = this.nodes.filter(n => n.name == input);
-            if (active.length > 0) {
-                active.forEach(n => n.toggle());
+            this.nodes.forEach(n => {
+                if (n.isActive()) n.toggle();
+            });
+            let next = this.nodes.find(n => (n.name == input) && (!this.visited.has(n)));
+            if (next) {
+                next.toggle();
+                //Highlight parent Node i.e. quantifier 
+                this.transitions.find(t => t.to == next)?.from.toggle();
+                this.visited.add(next);
                 this.canvas.draw();
                 return true;
             } else {
@@ -193,7 +201,9 @@ export class RegexFactory extends Factory{
         let active = this.nodes.filter(n => n.isActive());
         active.forEach(n => n.toggle());
         this.canvas.draw();
-        return true;
+        this.visited = new Set();
+        //Garbage return, cant validate a word against a syntax tree
+        return (Math.random() < .50);
     }
 
     private createLevels(): Array<Array<Node>> {

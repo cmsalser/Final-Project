@@ -1,48 +1,29 @@
-import { Component, ViewChild } from '@angular/core';
-import * as parser from 'regexp-tree';
-import { VisualizerComponent } from './children/visualizer/visualizer.component';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [
+    trigger('fadeOut', [
+      transition(':leave', [
+        animate('400ms ease', style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
-export class AppComponent {
-  @ViewChild('regex') regexChild!: VisualizerComponent;
-  @ViewChild('nfa') nfaChild!: VisualizerComponent;
-  @ViewChild('dfa') dfaChild!: VisualizerComponent;
-  title = 'regular expressions and finite automata';
-  error: string | undefined = undefined;
-  loading: any = null;
-
-  onClick(text: string) {
-    if (text.length > 0) {
-      try {
-        this.nfaChild.data = parser.parse('/' + text + '/');
-        this.regexChild.data = parser.parse('/' + text + '/');
-        this.dfaChild.data = parser.parse('/' + text + '/');
-        this.error = undefined;
-      } catch (e) {
-        console.log(e)
-        if (e instanceof SyntaxError) {
-          this.error = e.message;
-        } else if (e instanceof Error) {
-          this.error = e.message;
-        }
-      }
-    } else {
-      this.error = "Please enter an expression first."
-    }
+export class AppComponent { 
+  private _entry = true;
+  public get entry() {
+    return this._entry;
   }
 
-  async validate(text: string) {
-    const tokens = ['start'].concat([...text]);
-    this.loading = true;
-    await Promise.all([
-      this.regexChild.validate(tokens),
-      this.dfaChild.validate(tokens),
-      this.nfaChild.validate(tokens)
-    ]);
-    this.loading = null;
+  showMain() {
+    this._entry = false;
+  }
+
+  showEntry() {
+    this._entry = true;
   }
 }

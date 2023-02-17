@@ -21,11 +21,13 @@
     "@angular/router": "^14.2.0",
     "@ng-bootstrap/ng-bootstrap": "^13.0.0",
     "@popperjs/core": "^2.11.6",
+    "@types/web-animations-js": "^2.2.12",
     "bootstrap": "^5.2.2",
     "dagre": "^0.8.5",
     "regexp-tree": "^0.1.24",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
+    "typeit": "^8.7.1",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

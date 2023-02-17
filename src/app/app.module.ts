@@ -4,11 +4,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { AppComponent } from './app.component';
 import { VisualizerComponent } from './children/visualizer/visualizer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EntrySceneComponent } from './children/entry-scene/entry-scene.component';
+import { MainComponent } from './children/main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    VisualizerComponent
+    VisualizerComponent,
+    EntrySceneComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
