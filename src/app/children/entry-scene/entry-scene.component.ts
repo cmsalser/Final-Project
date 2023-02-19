@@ -13,10 +13,7 @@ import TypeIt from 'typeit'
         animate('3000ms ease', style({ opacity: 1 }))
       ])
     ])
-  ],
-  host: {
-    '(document:keydown.escape)': 'escape()'
-  }
+  ]
 })
 export class EntrySceneComponent implements OnInit {
   @Output() showMain = new EventEmitter();
@@ -46,6 +43,7 @@ export class EntrySceneComponent implements OnInit {
     .go();
   }
 
+  @HostListener('document:keydown.escape')
   escape() {
     this.showMain.emit();
   }
