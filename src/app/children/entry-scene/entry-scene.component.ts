@@ -29,7 +29,7 @@ export class EntrySceneComponent implements OnInit {
       lifelike: true,
       speed: 50
     })
-    .type('<h3>hello, welcome to my final project!</h3>')
+    .type('<h3>welcome to my final project!</h3>')
     .break()
     .type('<h1><b>REGULAR EXPRESSIONS AND THEIR CONVERSIONS TO FINITE AUTOMATA</b></h1>')
     .break()
