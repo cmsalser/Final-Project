@@ -13,8 +13,7 @@ import TypeIt from 'typeit'
         animate('3000ms ease', style({ opacity: 1 }))
       ])
     ])
-  ], 
-  host: {}
+  ]
 })
 export class EntrySceneComponent implements OnInit {
   @Output() showMain = new EventEmitter();
