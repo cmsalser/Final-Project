@@ -46,7 +46,6 @@ export class EntrySceneComponent implements OnInit {
     .go();
   }
 
-  //@HostListener('document:keydown.escape')
   escape() {
     this.showMain.emit();
   }
