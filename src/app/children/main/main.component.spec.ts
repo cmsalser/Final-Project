@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MainComponent } from './main.component';
 
 describe('MainComponent', () => {
@@ -8,7 +8,8 @@ describe('MainComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MainComponent ]
+      declarations: [ MainComponent ],
+      imports: [ BrowserAnimationsModule ]
     })
     .compileComponents();
 

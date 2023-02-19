@@ -29,7 +29,7 @@ export class MainComponent implements OnInit {
   @ViewChild('dfa') dfaChild!: VisualizerComponent;
   title = 'regular expressions and finite automata';
   error: string | undefined = undefined;
-  loading: any = null;
+  loading: any = true;
 
   constructor() {}
 
@@ -43,6 +43,7 @@ export class MainComponent implements OnInit {
   onClick(text: string) {
     if (text.length > 0) {
       try {
+        this.loading = null; 
         this.nfaChild.data = parser.parse('/' + text + '/');
         this.regexChild.data = parser.parse('/' + text + '/');
         this.dfaChild.data = parser.parse('/' + text + '/');

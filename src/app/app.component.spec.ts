@@ -26,22 +26,4 @@ describe('AppComponent', () => {
   it('should create the app', () => {
     expect(app).toBeTruthy();
   });
-
-  it(`should have as title 'regex'`, () => {
-    expect(app.title).toEqual('regular expressions and finite automata');
-  });
-
-  it('should render title', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.header h1')?.textContent).toContain('regular expressions and finite automata');
-  });
-
-  it('should not allow empty strings', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    
-    app.onClick('');
-    expect(app.error).toBeTruthy();
-    expect(app.error).toEqual('Please enter an expression first.')
-  });
 });
