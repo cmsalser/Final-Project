@@ -15,7 +15,7 @@ import TypeIt from 'typeit'
     ])
   ],
   host: {
-    '(document:keydown.excape)': 'escape()'
+    '(document:keydown.escape)': 'escape()'
   }
 })
 export class EntrySceneComponent implements OnInit {
