@@ -1,5 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, OnInit, Output, HostListener } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
+import { Component, EventEmitter, OnInit, Output, HostListener, ViewContainerRef, TemplateRef } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import TypeIt from 'typeit'
 
 @Component({
@@ -19,10 +21,10 @@ export class EntrySceneComponent implements OnInit {
   @Output() showMain = new EventEmitter();
   showButtons: boolean = false;
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.showButtons = false;
+    this.showButtons = true;
     new (TypeIt as any)('#typeItTarget', {
       html: true,
       cursor: false,
@@ -45,6 +47,14 @@ export class EntrySceneComponent implements OnInit {
 
   @HostListener('document:keydown.escape')
   escape() {
-    this.showMain.emit();
+    if (!this.modalService.hasOpenModals()) {
+      this.showMain.emit();
+    }
+  }
+
+  openTutorial(content: TemplateRef<any>) {
+    this.modalService.open(content, { 
+      scrollable: true, 
+    });
   }
 }

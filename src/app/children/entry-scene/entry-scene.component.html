@@ -3,12 +3,83 @@
         <div class="row" id="typeItTarget">
         </div>
         <br>
+        <br>
+        <br>
         <div class="row" *ngIf="showButtons" @fadeIn>
-            <div class="col d-flex justify-content-around"><button class="tutorial-button">regular expressions</button></div>
-            <div class="col d-flex justify-content-around"><button class="tutorial-button">finite automata</button></div>
-            <div class="col d-flex justify-content-around"><button class="tutorial-button">thompsons construction</button></div>
+            <div class="col d-flex justify-content-around"><button class="tutorial-button" (click)="openTutorial(longContent)">regular expressions</button></div>
+            <div class="col d-flex justify-content-around"><button class="tutorial-button" (click)="openTutorial(longContent)">finite automata</button></div>
+            <div class="col d-flex justify-content-around"><button class="tutorial-button" (click)="openTutorial(longContent)">thompsons construction</button></div>
         </div>
+        <br>
+        <br>
         <br>
         <h4 id="hint"></h4>
     </div>
 </div>
+<ng-template #longContent let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Regular Expressions</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<p>
+			Regular Expressions are sequences of characters used as a search pattern. They are used to search text and find matchs to the sequence specifed.
+            They have many different grammers, however for this project we will only concern ourselves with a few key ones. 
+		</p>
+        <hr>
+        <h6>a | b -- Disjunction</h6>
+		<p>
+			The first one we will look at is Disjunction. This will match against either a or b. 
+            Below, the highlighted sections of the words show what matches a|b !
+        <ul>
+            <li>f<mark>a</mark>t</li>
+            <li><mark>b</mark>e<mark>a</mark>t</li>
+            <li>m<mark>a</mark>r<mark>b</mark>le</li>
+        </ul>
+        <hr>
+        <h6>ab -- Conjunction</h6>
+        <p>
+            The second is Conjuction. This is one or more characters joined together. It matches against itself!
+        <ul>
+            <li><mark>ab</mark>out</li>
+            <li>comfort<mark>ab</mark>le</li>
+            <li>an<mark>ab</mark>le</li>
+        </ul>
+        <hr>
+        <h6>a* -- Zero or More</h6>
+        <p>
+            The third is the quantifier zero or more. It matches zero or more of the character or group it is attached to. It also matches empty strings!
+        <ul>
+            <li><mark> </mark></li>
+            <li>s<mark>a</mark>l<mark>aa</mark>m</li>
+            <li>b<mark>a</mark>z<mark>aa</mark>rs</li>
+        </ul>
+        <hr>
+        <h6>a+ -- One or More</h6>
+        <p>
+            + serves as the quantifier of one or more. It does not match empty strings.
+        <ul>
+            <li>s<mark>a</mark>l<mark>aa</mark>m</li>
+            <li>b<mark>a</mark>z<mark>aa</mark>rs</li>
+            <li><mark>a</mark>m<mark>a</mark>zing</li>
+        </ul>
+        <hr>
+        <h6>a? -- Zero or One</h6>
+        <p>
+            TC
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <hr>
+        <h6>(a) -- Groups</h6>
+        <p>
+            TC
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</ng-template>
