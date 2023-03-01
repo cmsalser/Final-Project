@@ -1,5 +1,4 @@
 import { CanvasElement } from "./canvas-element";
-import { Render } from "./render";
 import { Point } from "./point";
 
 export class Circle extends CanvasElement {
@@ -16,25 +15,25 @@ export class Circle extends CanvasElement {
         this.status = false;
     }
 
-    override draw(tool: Render): void {
-        tool.ctx.beginPath();
-        tool.ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);
+    override draw(ctx: CanvasRenderingContext2D): void {
+        ctx.beginPath();
+        ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);
         if (this.text) {
-            tool.ctx.textAlign = 'center';
-            if (this.text.length < 9) tool.ctx.font = "14px Arial";
-            else tool.ctx.font = "10px Arial";  
-            tool.ctx.fillText(this.text, this.center.x, this.center.y);
+            ctx.textAlign = 'center';
+            if (this.text.length < 9) ctx.font = "14px Arial";
+            else ctx.font = "10px Arial";  
+            ctx.fillText(this.text, this.center.x, this.center.y);
         }
-        tool.ctx.stroke();
+        ctx.stroke();
 
         if (this.status) {
-            tool.ctx.beginPath();
-            tool.ctx.strokeStyle = "#eefc26";
-            tool.ctx.lineWidth = 5;
-            tool.ctx.arc(this.center.x, this.center.y, this.radius + 3, 0, 2 * Math.PI)
-            tool.ctx.stroke();
-            tool.ctx.strokeStyle = "#000000";
-            tool.ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.strokeStyle = "#eefc26";
+            ctx.lineWidth = 5;
+            ctx.arc(this.center.x, this.center.y, this.radius + 3, 0, 2 * Math.PI)
+            ctx.stroke();
+            ctx.strokeStyle = "#000000";
+            ctx.lineWidth = 1;
         }
     }
 

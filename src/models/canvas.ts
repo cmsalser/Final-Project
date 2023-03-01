@@ -1,12 +1,10 @@
 import { CanvasElement } from "./canvas-element";
 import { Point } from "./point";
-import { Render } from "./render";
 
 export class Canvas {
     private children: Array<CanvasElement>;
     private canvas: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
-    private render: Render;
     private grabPoint?: Point = undefined;
     private state = {
         scale: 1,
@@ -23,7 +21,6 @@ export class Canvas {
         let context = canvas.getContext('2d');
         this.canvas = canvas;
         this.context = context;
-        this.render = {canvas: canvas, ctx: context};
         this.children = [];
         this.setupListeners(); 
     }
@@ -34,7 +31,7 @@ export class Canvas {
 
     draw() {
         this.context.clearRect(-this.state.xTranslation, -this.state.yTranslation, this.canvas.width * (1/this.state.scale), this.canvas.height * (1/this.state.scale)); 
-        this.children.forEach(e => e.draw(this.render));
+        this.children.forEach(e => e.draw(this.context));
     }
 
     empty() {
