@@ -6,9 +6,9 @@
         <br>
         <br>
         <div class="row" *ngIf="showButtons" @fadeIn>
-            <div class="col d-flex justify-content-around"><button class="tutorial-button" (click)="openTutorial(longContent)">regular expressions</button></div>
-            <div class="col d-flex justify-content-around"><button class="tutorial-button" (click)="openTutorial(longContent)">finite automata</button></div>
-            <div class="col d-flex justify-content-around"><button class="tutorial-button" (click)="openTutorial(longContent)">thompsons construction</button></div>
+            <div class="col d-flex justify-content-around"><button class="tutorial-button" (click)="openTutorial(regexContent)">regular expressions</button></div>
+            <div class="col d-flex justify-content-around"><button class="tutorial-button" (click)="openTutorial(faContent)">finite automata</button></div>
+            <div class="col d-flex justify-content-around"><button class="tutorial-button" (click)="openTutorial(thompsonContent)">thompsons construction</button></div>
         </div>
         <br>
         <br>
@@ -16,7 +16,7 @@
         <h4 id="hint"></h4>
     </div>
 </div>
-<ng-template #longContent let-modal>
+<ng-template #regexContent let-modal>
 	<div class="modal-header">
 		<h4 class="modal-title">Regular Expressions</h4>
 		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
@@ -31,6 +31,7 @@
 		<p>
 			The first one we will look at is Disjunction. This will match against either a or b. 
             Below, the highlighted sections of the words show what matches a|b !
+        </p>
         <ul>
             <li>f<mark>a</mark>t</li>
             <li><mark>b</mark>e<mark>a</mark>t</li>
@@ -40,6 +41,7 @@
         <h6>ab -- Conjunction</h6>
         <p>
             The second is Conjuction. This is one or more characters joined together. It matches against itself!
+        </p>
         <ul>
             <li><mark>ab</mark>out</li>
             <li>comfort<mark>ab</mark>le</li>
@@ -49,6 +51,7 @@
         <h6>a* -- Zero or More</h6>
         <p>
             The third is the quantifier zero or more. It matches zero or more of the character or group it is attached to. It also matches empty strings!
+        </p>
         <ul>
             <li><mark> </mark></li>
             <li>s<mark>a</mark>l<mark>aa</mark>m</li>
@@ -58,6 +61,7 @@
         <h6>a+ -- One or More</h6>
         <p>
             + serves as the quantifier of one or more. It does not match empty strings.
+        </p>
         <ul>
             <li>s<mark>a</mark>l<mark>aa</mark>m</li>
             <li>b<mark>a</mark>z<mark>aa</mark>rs</li>
@@ -66,20 +70,87 @@
         <hr>
         <h6>a? -- Zero or One</h6>
         <p>
-            TC
+            The ? quantifier signifies zero or one. Just like *, it also matches empty strings.
+        </p>
         <ul>
-            <li></li>
-            <li></li>
-            <li></li>
+            <li><mark> </mark></li>
+            <li>m<mark>a</mark>tter</li>
+            <li>v<mark>a</mark>rying</li>
         </ul>
         <hr>
-        <h6>(a) -- Groups</h6>
+        <h6>(a|b)* -- Groups</h6>
         <p>
-            TC
+            Groups are a very powerful tool, they work exactly like parenthesis in math. (a|b)* will match a or b zero or more times.
+        </p>
         <ul>
-            <li></li>
-            <li></li>
-            <li></li>
+            <li><mark>a</mark><mark>b</mark><mark>b</mark>y</li>
+            <li><mark>b</mark>onz<mark>a</mark></li>
+            <li>j<mark>a</mark><mark>b</mark><mark>b</mark>ed</li>
         </ul>
+    </div>
+</ng-template>
+<ng-template #faContent let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Finite Automata</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+    <div class="modal-body">
+        <p>
+            Finite Automata are pattern recognizing machines that accept or reject input words.
+            At their core, they move within a set of states depending on transitions between these states.
+            They are defined by a 5-tuple:
+        </p>
+        <ul>
+            <li>A set of states</li>
+            <li>A alphabet, also know as the set of symbols the machine can transition on.</li>
+            <li>A transition function, specifiying how the machine can change state.</li>
+            <li>A initial state, denoted by an arrow.</li>
+            <li>A set of accepting states, denoted by a double circle.</li>
+        </ul>
+        <p>    
+            There are two main flavors of finite automata, Deterministic ones know as DFAs or Non-Deterministic ones know as NFA's.
+        </p>
+        <hr>
+        <h6>
+            DFA's
+        </h6>
+        <p>
+            Deterministic finite automatas are variations of finite automata. They are deterministic because there is exactly one sequence of steps for each string.
+            This means that every state has at most one transition per symbol. 
+            Take for example the following DFA with a language of 0s and 1s.
+            <img class="img-fluid mx-auto d-block" src="../../../assets/images/dfa.png">
+            Each state has two outgoing transitions, one on 1 and one on 0. It is also important to know that every DFA can be derived from a NFA through the powerset construction
+            method, though we will not be looking at that transformation here.
+        </p>
+        <hr>
+        <h6>
+            NFA's
+        </h6>
+        <p>
+            Non-Deterministic Finite Automata are another variation of finite automata. Unlike DFAs they are non deterministic because they do not need to follow the same rules as DFAs.
+            They have no restrictions on the number of transitions, or on multiple transitions on the same symbol. They also allow epsilon transitions, notated by ε*. These are special transitions
+            that do not consume symbols when used.
+            Below is an example NFA with a language of 0s and 1s.
+            <img class="img-fluid mx-auto d-block" src="../../../assets/images/nfa.png" style="padding: 5%;">
+            To generate a NFA from a regular expression, a process credited to computer scientist Ken Thompson can be used. 
+        </p>
+    </div>
+</ng-template>
+<ng-template #thompsonContent let-modal>
+    <div class="modal-header">
+            <h4 class="modal-title">Thompson's Construction</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <p>
+            To facilite changing a regular expression into a NFA, the Thompson's Contruction algorithm must be used. This algorithm is credited to Ken Thompson,
+            the original creator of the unix grep command. The algothim recurivly splits the regualar expression up into its sub expressions, and generates a equivalent NFA for 
+            each. Here we will walk you through the building block the algorithm uses to construct the final NFA.
+        <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc1.png">
+        <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc2.png">
+        <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc3.png">
+        <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc4.png">
+        <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc5.png">
+        </p>
     </div>
 </ng-template>

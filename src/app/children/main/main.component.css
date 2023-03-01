@@ -9,11 +9,13 @@
     background-color: gray;
 }
 .header {
+    border: 8mm solid #f2f2f2;
+    border-radius: 100px;
     background-color: #222222;
     color: white;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+   justify-content: space-between;
 }
 .header h1 {
     margin-left: .5%;
@@ -26,7 +28,7 @@
     width: min-content;
     height: min-content;
     color: #222222;
-    
+    border-radius: 100px;
 }
 .header button:hover {
     opacity: .9;
