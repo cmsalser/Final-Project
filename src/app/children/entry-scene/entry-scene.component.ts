@@ -24,7 +24,7 @@ export class EntrySceneComponent implements OnInit {
   constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.showButtons = true;
+    this.showButtons = false;
     new (TypeIt as any)('#typeItTarget', {
       html: true,
       cursor: false,

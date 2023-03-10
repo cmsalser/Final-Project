@@ -145,12 +145,39 @@
         <p>
             To facilite changing a regular expression into a NFA, the Thompson's Contruction algorithm must be used. This algorithm is credited to Ken Thompson,
             the original creator of the unix grep command. The algothim recurivly splits the regualar expression up into its sub expressions, and generates a equivalent NFA for 
-            each. Here we will walk you through the building block the algorithm uses to construct the final NFA.
-        <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc1.png">
-        <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc2.png">
-        <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc3.png">
-        <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc4.png">
-        <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc5.png">
+            each. The algorithm then joins the NFAs together, creating an NFA equivalent to the regular expression.
+            Here we will walk you through the building blocks the algorithm uses to construct the final NFA. Note, in the following X(a) and X(b) denote the subexpressions of a and b.
+        </p>
+        <hr>
+        <h6>The empty expression</h6>
+        <p>
+            The empty expression is converted into the following NFA
+            <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc1.png">
+        </p>
+        <hr>
+        <h6>Symbols</h6>
+        <p>
+            A lone symbol is converted into the NFA 
+            <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc2.png">
+        </p>
+        <hr>
+        <h6>Disjuntion</h6>
+        <p>
+            A disjunction is split into the following, where from S0 you either go into the start state of X(a) or X(b)
+            <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc3.png">
+        </p>
+        <hr>
+        <h6>Conjunction</h6>
+        <p>
+            Conjunction joins the NFAs of X(a) and X(b) by connecting X(a)'s end state to X(b)'s start state 
+            <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc4.png">
+        </p>
+        <hr>
+        <h6>Zero or More</h6>
+        <p>
+            Zero or more becomes the following. ε* transitions are added to allow skipping it or looping through it.
+            <img class="img-fluid mx-auto d-block" src="../../../assets/images/tc5.png">
+            One or more and zero or one are variations of this NFA.
         </p>
     </div>
 </ng-template>
