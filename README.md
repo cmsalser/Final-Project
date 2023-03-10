@@ -14,17 +14,17 @@ This project was created with
 ## Setup
 
 First, clone the repo:
-'''
-git clone https://github.com/cmsalser/Final-Project.git
-'''
+```shell
+> git clone https://github.com/cmsalser/Final-Project.git
+```
 
 Next, cd into the repo and install its dependencies:
-'''
-cd regex
-npm install
-'''
+```shell
+> cd regex
+> npm install
+```
 
 Now, simply serve it, and open your browser on http://localhost:4200/:
-'''
-ng serve
-'''
+```shell
+> ng serve
+```
