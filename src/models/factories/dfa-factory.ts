@@ -14,7 +14,6 @@ const dagre = require('dagre');
 const NODE_RADIUS = 30;
 export class DFAFactory extends Factory{
     private dfa: any;
-    private regex: string = '';
     private table: any;
     private graph: any;
 

@@ -1,6 +1,11 @@
 import { CanvasElement } from "./canvas-element";
 import { Point } from "./point";
 
+/**
+ * This implementation is largly inspired by the work of
+ * https://github.com/joeylemon/nfa-to-dfa, it is worth 
+ * checking out!
+ */
 export class Canvas {
     private children: Array<CanvasElement>;
     private canvas: HTMLCanvasElement;

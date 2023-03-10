@@ -17,7 +17,6 @@ export class NFAFactory extends Factory{
     private nfa: any;
     private table: any;
     private graph: any;
-    private vistited = new Set();
 
     constructor(canvas: Canvas) {
         super(canvas);
